@@ -28,18 +28,18 @@ import { ScoreModule } from './score/score.module';
 
 import { AuthModule } from './auth/auth.module';
 
-
+// mysql://baa5cf0bf0ef81:cea05d22@us-cdbr-east-06.cleardb.net/heroku_462ce6ee6f8f9ad?reconnect=true
 @Module({
   controllers: [AppController],
   imports: [
     CandidateModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
+      host: 'us-cdbr-east-06.cleardb.net',
       port: 3306,
-      username: 'root',
-      password: 'ariba05',
-      database: 'jobia',
+      username: 'baa5cf0bf0ef81',
+      password: 'cea05d22',
+      database: 'heroku_462ce6ee6f8f9ad',
       entities: [candidate, resume, organization, jobDescription, resumeEducation, resumeExperience, resumeProjects, score],
       synchronize: true,
       autoLoadEntities: true, 
