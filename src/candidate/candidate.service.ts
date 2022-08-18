@@ -33,7 +33,7 @@ export class CandidateService {
             return this.candidateRepository.save(candCreateDto);
         }
         else
-        throw new HttpException('Account not found', HttpStatus.CONFLICT);
+            throw new HttpException('Account not found', HttpStatus.CONFLICT);
     }
 
 
@@ -86,45 +86,47 @@ export class CandidateService {
             relations: ['resFK'],
             where: { candId: candFK }
         });
+        
 
-        console.log(getResume[0].resFK.resId);
+        if (getResume[0].resFK) {
+            console.log(getResume[0].resFK.resId);
+            console.log("Aria");
 
-        const scores = await this.scoreRepository.find({ where: { resId: getResume[0].resFK.resId } });
+            const scores = await this.scoreRepository.find({ where: { resId: getResume[0].resFK.resId } });
+            console.log(scores.length);
+            let JDs;
+            console.log(scores);
+            let JDObject = new Array();
 
+            for (let index = 0; index < scores.length; index++) {
 
-
-        console.log(scores.length);
-        let JDs;
-        console.log(scores);
-        let JDObject = new Array();
-
-        for (let index = 0; index < scores.length; index++) {
-
-            JDs = await this.jobDescriptionRepository.find({
-                relations: ['orgFK'],
-                where: { jdId: scores[index]['jdId'] }
-            });
-            JDObject.push(JDs);
-
-            
-            JDObject[index] = {
-                jdId: JDObject[index][0].jdId,
-                jdPosition: JDObject[index][0].jdPosition,
-                jdRequiredSkills: JDObject[index][0].jdRequiredSkills,
-                jdMinimumExperience: JDObject[index][0].jdMinimumExperience,
-                jdCity: JDObject[index][0].jdCity,
-                jdLocation: JDObject[index][0].jdLocation,
-                scoreId: scores[index].scoreId,
-                orgName: JDObject[index][0].orgFK['orgName']
-
-            };
+                JDs = await this.jobDescriptionRepository.find({
+                    relations: ['orgFK'],
+                    where: { jdId: scores[index]['jdId'] }
+                });
+                JDObject.push(JDs);
 
 
+                JDObject[index] = {
+                    jdId: JDObject[index][0].jdId,
+                    jdPosition: JDObject[index][0].jdPosition,
+                    jdRequiredSkills: JDObject[index][0].jdRequiredSkills,
+                    jdMinimumExperience: JDObject[index][0].jdMinimumExperience,
+                    jdCity: JDObject[index][0].jdCity,
+                    jdLocation: JDObject[index][0].jdLocation,
+                    scoreId: scores[index].scoreId,
+                    orgName: JDObject[index][0].orgFK['orgName']
+
+                };
+
+
+            }
+            console.log(JDObject);
+
+            return JDObject;
         }
-        console.log(JDObject);
-
-        return JDObject;
-
+        else 
+            return null;
     }
 
 

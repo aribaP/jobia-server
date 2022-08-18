@@ -52,9 +52,6 @@ export class CandidateController {
         return this.candService.showResumeByCandidateId(candId);
     }
 
-    
-
-
 
 
     @Roles(Role.Candidate)
@@ -73,12 +70,16 @@ export class CandidateController {
     showNotificationUnderCandidate(@Param('candId', ParseIntPipe) candId: number) {
         return this.candService.getNotification(candId);
     }
+
+
     @Roles(Role.Candidate)
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Get('/:candId')
     getCandidateById(@Param('candId') candId: number) {
         return this.candService.showCById(candId);
     }
+
+
     @Roles(Role.Candidate)
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Delete('delete/:candId')
