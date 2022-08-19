@@ -9,13 +9,13 @@ export class candidate{
     @Column({nullable: false})
     candName: string
 
-    @Column({nullable: false})
+    @Column({nullable: false, unique: true})
     candEmail: string
 
     @Column({nullable: false})
     candPassword: string
 
-    @Column({nullable: true})
+    @Column({nullable: true, unique: true})
     candContactNumber: string
 
     @Column({nullable: true})
@@ -24,7 +24,7 @@ export class candidate{
     @Column({nullable: true})
     candAddress: string
 
-    @Column({nullable: true})
+    @Column({nullable: true, unique: true})
     candCNIC: string
 
     @OneToOne(() => resume, (resFK) => resFK.candFK) // specify inverse side as a second parameter

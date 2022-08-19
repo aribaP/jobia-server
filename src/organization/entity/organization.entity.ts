@@ -17,7 +17,7 @@ export class organization{
     @Column({nullable:  true})
     orgPassword: string
 
-    @Column({nullable: true})
+    @Column({nullable: true, unique: true})
     orgContactNumber: string
 
     @IsNotEmpty()
